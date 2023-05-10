@@ -1,0 +1,22 @@
+---
+title: "Sign in with Ethereum"
+description: "An innovative approach to wallet management across multiple chains"
+---
+
+## Simplifying Wallet Interactions Across Chains
+
+Traditionally, managing wallets across multiple chains can be a complex and confusing process. With MoonGate's "Sign in with Ethereum" module, this process is significantly simplified. Users can sign in with their Ethereum credentials, and MoonGate manages the infrastructure in a semi-custodial format.
+
+Once signed in, a private key is created. This key is split into shards, one of which is kept on the front-end, and another on the MoonGate backend. A third shard, known as the "social recovery share", is sent to a trusted third party (TPP) AWS Key Management service using Shamir's Secret Sharing.
+
+This approach allows for seamless interaction and transactions across multiple chains, all under the comfort of a single sign-in process.
+## Enhancing Conversion Rates
+
+By streamlining the sign-in process and enabling easier management across multiple chains, MoonGate's "Sign in with Ethereum" module can significantly improve conversion rates to your wallet. The ease of use and convenience can attract more users, reducing drop-offs that commonly occur due to complex sign-in and wallet management processes.
+
+## Ensuring Security
+MoonGate ensures high levels of security with the semi-custodial approach to managing keys. The splitting of the private key into shards significantly reduces the risk of the key being compromised. Even in the event of a breach, the attacker would need access to at least two of the shards to be able to utilize the key, which is highly unlikely.
+
+The additional layer of security provided by the trusted third-party AWS Key Management service using Shamir's Secret Sharing further ensures the safety of the private key. In the event of a loss of access to the key, the social recovery share can be used to recover access.
+
+This approach ensures a balance between user convenience and security, providing a secure yet easy-to-use solution for managing wallets across multiple chains.
