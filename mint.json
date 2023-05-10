@@ -11,6 +11,7 @@
     "light": "#8d60f0",
     "dark": "#5C35B1"
   },
+  "backgroundImage": "/images/background.png",
   "topbarLinks": [
     {
       "name": "About Us",
