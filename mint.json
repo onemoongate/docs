@@ -22,6 +22,10 @@
     "name": "Get Started",
     "url": "https://praneetsinha28.typeform.com/to/U8xKUZfP?typeform-source=www.moongate.one"
   },
+  "modeToggle": {
+    "default": "dark",
+    "isHidden": true
+  },
   "anchors": [
     {
       "name": "Community",
