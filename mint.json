@@ -41,7 +41,8 @@
     {
       "group": "Authentication Docs",
       "pages": [
-        "authentication/introduction",
+        "authentication/siwe",
+        "authentication/social-login",
         "authentication/flutter-sdk"
   ]
     }
