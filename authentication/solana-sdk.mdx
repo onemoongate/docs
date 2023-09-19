@@ -64,6 +64,10 @@ Next, add the following hooks to the main function component of where you want t
 const { select, connected } = useWallet();
 const { visible, setVisible } = useWalletModal();
 ```
+Where your WalletMultiButton is defined, import our custom Auth AuthModal component like follows:
+```javascript
+import { AuthModal } from 'wrapper-sdk';
+```
 
 Then, replace the existing button with this:
 ```javascript
