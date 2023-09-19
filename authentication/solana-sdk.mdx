@@ -55,6 +55,7 @@ It is usually called WalletMultiButton - or similar.
 ```
 At the top of where this button is defined, call the following imports
 ```javascript
+import { AuthModal } from 'wrapper-sdk';
 import { WalletMultiButton, WalletDisconnectButton, useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { useWallet } from '@solana/wallet-adapter-react';
 ```
@@ -63,10 +64,6 @@ Next, add the following hooks to the main function component of where you want t
 ```javascript
 const { select, connected } = useWallet();
 const { visible, setVisible } = useWalletModal();
-```
-Where your WalletMultiButton is defined, import our custom Auth AuthModal component like follows:
-```javascript
-import { AuthModal } from 'wrapper-sdk';
 ```
 
 Then, replace the existing button with this:
