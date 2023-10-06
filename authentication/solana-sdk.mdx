@@ -89,3 +89,35 @@ Then, replace the existing button with this:
 ```
 
 That's it. Quick and easy. You're ready to go! That's all it took to start accepting Ethereum users on your dApp!
+
+## Customization
+
+### Customizing the button
+
+You can customize the button by passing in the following props:
+
+```javascript
+<AuthModal
+  select={select}
+  connected={connected}
+  setVisible={setVisible}
+  btnStyles={"btn-red"}
+/>
+```
+
+The btnStyles prop takes in a string that you can use to customize the button. You can define your own styles in your CSS file and pass in the class name here.
+
+### Customizing the modal
+
+You can customize the modal by passing in the following props:
+
+```javascript
+<AuthModal
+  select={select}
+  connected={connected}
+  setVisible={setVisible}
+  modalStyles={"modal-red"}
+/>
+```
+
+The modalStyles prop takes in a string that you can use to customize the modal. You can define your own styles in your CSS file and pass in the class name here.
