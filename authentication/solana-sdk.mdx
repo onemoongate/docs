@@ -90,11 +90,32 @@ Then, replace the existing button with this:
 
 That's it. Quick and easy. You're ready to go! That's all it took to start accepting Ethereum users on your dApp!
 
-## Customization
+## Customisation
 
-### Customizing the button
+### Customising the wallet pop-up position
 
-You can customize the button by passing in the following props:
+You can customise the position of the wallet pop-up by passing in the following props to the adapter with the following list of options:
+
+```
+top-left
+top-right
+bottom-left
+bottom-right
+```
+
+```javascript
+const wallets = useMemo(
+  () => [
+    new UnsafeBurnerWalletAdapter(),
+    new MoongateWalletAdapter({ position: "top-right" }), // you can choose the location by passing in the prop here
+  ],
+  [network]
+);
+```
+
+### Customising the button
+
+You can customise the button by passing in the following props:
 
 ```javascript
 <AuthModal
