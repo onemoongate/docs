@@ -1,0 +1,153 @@
+---
+title: "Full SDK Integration"
+icon: "rocket"
+description: "Start enabling Ethereum users on your Solana dApp in just a few steps. Let&#39;s get cracking."
+---
+
+# How to use our full SDK
+For the best user experience and maximize your conversions for both Ethereum & Solana wallet users.
+<Frame caption="This is what your user will see once they press the connect wallet button.">
+  <img src="/images/chain-select.png" />
+</Frame>
+<br />
+
+### Requirements
+Take-off Safety Procedures Before we accelerate, let's check if you&#39;re ready to go. 
+Please ensure you are using the Solana Labs Wallet adapter in
+your dApp. - This SDK is built for React based projects only. If you are looking
+to implement using another stack, talk to our staff on Discord. - If you are
+using a custom wallet adapter instead of the Solana Labs Wallet Adapter - speak
+to a member of our staff on Discord and we will custom cater our integration for
+you.
+
+### How to Integrate full SDK:
+
+Alright, we&#39;re ready to start integrating!
+
+#### Step 1
+On your frontend, install the dependencies using npm.
+
+```javascript
+npm i @moongate/wallet-wrapper-sdk @moongate/moongate-adapter @moongate/solana-wallet-sdk
+```
+
+#### Step 2
+Navigate to your Solana Labs wallet adapter where the wallets are defined.
+
+It should look something like this:
+
+```javascript
+const wallets = useMemo(
+  () => [new UnsafeBurnerWalletAdapter()],
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [network]
+);
+```
+
+Then, import the wallet adapter from the top of the file like follows:
+
+```javascript
+import { MoongateWalletAdapter } from "@moongate/moongate-adapter";
+```
+
+Next, instantiate an instance of the wallet adapter within the wallets declaration like follows:
+
+```javascript
+const wallets = useMemo(
+  () => [
+    new UnsafeBurnerWalletAdapter(),
+    new MoongateWalletAdapter(), // just add this line
+  ],
+  [network]
+);
+```
+
+#### Step 3
+Navigate to where your Wallet Adapter Connection button is defined.
+
+It is usually called WalletMultiButton - or similar.
+
+```javascript
+<WalletMultiButton /> // this is what it usually looks like
+```
+
+At the top of where this button is defined, call the following imports
+
+```javascript
+import { AuthModal } from "@moongate/wallet-wrapper-sdk";
+import {
+  WalletMultiButton,
+  WalletDisconnectButton,
+  useWalletModal,
+} from "@solana/wallet-adapter-react-ui";
+import { useWallet } from "@solana/wallet-adapter-react";
+```
+
+Next, add the following hooks to the main function component of where you want to define the button.
+
+```javascript
+const { select, connected } = useWallet();
+const { visible, setVisible } = useWalletModal();
+```
+
+Then, replace the existing button with this:
+
+```javascript
+<AuthModal select={select} connected={connected} setVisible={setVisible} />
+```
+
+That's it. Quick and easy. You're ready to go! That's all it took to start accepting Ethereum users on your dApp!
+
+
+
+### SDK Customisation
+#### Customizing the button
+You can customise the button by passing in the following props:
+
+```javascript
+<AuthModal
+  select={select}
+  connected={connected}
+  setVisible={setVisible}
+  btnStyles={"btn-red"}
+/>
+```
+
+The btnStyles prop takes in a string that you can use to customize the button. You can define your own styles in your CSS file and pass in the class name here.
+
+#### Customizing the modal
+
+You can customize the modal by passing in the following props:
+
+```javascript
+<AuthModal
+  select={select}
+  connected={connected}
+  setVisible={setVisible}
+  modalStyles={"modal-red"}
+/>
+```
+
+The modalStyles prop takes in a string that you can use to customize the modal. You can define your own styles in your CSS file and pass in the class name here.
+## Customisation
+
+### Customising the wallet pop-up position
+
+You can customise the position of the wallet pop-up by passing in the following props to the adapter with the following list of options:
+
+```
+top-left
+top-right
+bottom-left
+bottom-right
+```
+
+```javascript
+const wallets = useMemo(
+  () => [
+    new UnsafeBurnerWalletAdapter(),
+    new MoongateWalletAdapter({ position: "top-right" }), // you can choose the location by passing in the prop here
+  ],
+  [network]
+);
+```

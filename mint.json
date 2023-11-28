@@ -36,15 +36,18 @@
   "navigation": [
     {
       "group": "Welcome",
-      "pages": ["introduction"]
+      "pages": [
+        "introduction"
+      ]
     },
     {
-      "group": "Authentication Docs",
+      "group": "Integration Guide",
       "pages": [
-        "authentication/solana-sdk"
+        "authentication/solana-sdk",
+        "authentication/sdk-integration",
+        "authentication/adapter-integration"
       ]
     }
-
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/onemoongate",
