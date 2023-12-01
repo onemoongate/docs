@@ -53,5 +53,11 @@
     "twitter": "https://twitter.com/onemoongate",
     "github": "https://github.com/onemoongate",
     "linkedin": "https://www.linkedin.com/company/themoongate"
+  },
+  "analytics": {
+    "hotjar": {
+      "hjid": "3768135",
+      "hjsv": "6"
+    }
   }
 }
