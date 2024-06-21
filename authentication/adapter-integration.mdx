@@ -1,13 +1,13 @@
 ---
 title: "Wallet Adapter Integration"
 icon: "thumbs-up"
-description: "Start enabling Ethereum users on your Solana dApp in just a few steps. Let&#39;s get cracking."
+description: "Make your Solana dApp accessible to anyone in just a few steps. Let&#39;s get cracking."
 ---
 
 # How to use the Adapter Integration
-For the best user experience and maximize your conversions for both Ethereum & Solana wallet users, we recommend 
-<Frame caption="This is what your user will see once they press the connect wallet button.">
-  <img src="/images/wallet-adapter.jpeg" />
+
+<Frame caption="We offer Google, Apple, Twitter and Ethereum sign in options to your Solana dApp.">
+  <img src="/images/solana-adapter.jpeg" />
 </Frame>
 <br />
 
@@ -47,15 +47,18 @@ const wallets = useMemo(
 Then, import the wallet adapter from the top of the file like follows:
 
 ```javascript
-import { MoongateWalletAdapter } from "@moongate/moongate-adapter";
+import { registerMoonGateWallet } from "@moongate/moongate-adapter";
 ```
 
-Then just add the Wallet Adapter like this:
+Then just add the Wallet Adapter above the wallets memo like this, you can change the order the wallets by changing the order of the registerMoonGateWallet functions:
 
 ```javascript
+registerMoonGateWallet({ authMode: "Ethereum", position: "top-left", logoDataUri: "OPTIONAL ADD IN-WALLET LOGO URL HERE", buttonLogoUri: "ADD OPTIONAL LOGO FOR WIDGET BUTTON HERE" })
+registerMoonGateWallet({ authMode: "Google", position: "top-right", logoDataUri: "OPTIONAL ADD IN-WALLET LOGO URL HERE", buttonLogoUri: "ADD OPTIONAL LOGO FOR WIDGET BUTTON HERE" })
+registerMoonGateWallet({ authMode: "Twitter", position: "top-right", logoDataUri: "OPTIONAL ADD IN-WALLET LOGO URL HERE", buttonLogoUri: "ADD OPTIONAL LOGO FOR WIDGET BUTTON HERE" })
+registerMoonGateWallet({ authMode: "Apple", position: "top-right", logoDataUri: "OPTIONAL ADD IN-WALLET LOGO URL HERE", buttonLogoUri: "ADD OPTIONAL LOGO FOR WIDGET BUTTON HERE" })
 const wallets = useMemo(
   () => [
-    new MoongateWalletAdapter(), // just add this line - the higher it is in the array, the higher it will be in the wallet list
     new UnsafeBurnerWalletAdapter(),
   ],
   [network]
@@ -77,10 +80,10 @@ bottom-right
 ```
 
 ```javascript
+registerMoonGateWallet({ authMode: "Ethereum", position: "top-left", logoDataUri: "OPTIONAL ADD IN-WALLET LOGO URL HERE", buttonLogoUri: "ADD OPTIONAL LOGO FOR WIDGET BUTTON HERE" })
 const wallets = useMemo(
   () => [
     new UnsafeBurnerWalletAdapter(),
-    new MoongateWalletAdapter({ position: "top-right" }), // you can choose the location by passing in the prop here
   ],
   [network]
 );
