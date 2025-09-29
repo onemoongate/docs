@@ -1,0 +1,65 @@
+---
+title: "Integration Guide"
+description: "Complete integration guide for Create React App, Vite, and other React applications."
+---
+
+# Integration Guide
+
+Complete guide for integrating Moongate SDK with React applications (Create React App, Vite, and others).
+
+<Note>
+  Make sure you've completed the [installation guide](/authentication/moongate-sdk/installation) before proceeding.
+</Note>
+
+## 🚀 Quick Setup (1 minute)
+
+Simply wrap your app with MoonGateProvider and add the connect button:
+
+```tsx src/App.tsx
+import React from 'react';
+import { MoonGateProvider, MoongateConnectButton } from '@moongate/sdk';
+import '@moongate/sdk/styles.css';
+
+function App() {
+  return (
+    <MoonGateProvider apiKey="your-api-key-here">
+      <MoongateConnectButton />
+    </MoonGateProvider>
+  );
+}
+
+export default App;
+```
+
+<Frame caption="Complete integration in just 3 lines of code">
+  {/* Add screenshot of the simple integration */}
+</Frame>
+
+## 🎉 You're Done!
+
+Your React application now has full Solana wallet integration! The Moongate SDK automatically handles:
+
+- ✅ Wallet detection and connection
+- ✅ Transaction signing
+- ✅ Network switching
+- ✅ Error handling
+- ✅ Mobile responsiveness
+
+## 📖 Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="API Reference"
+    icon="book"
+    href="/authentication/moongate-sdk/api-reference"
+  >
+    Explore all available hooks and components
+  </Card>
+  <Card
+    title="Troubleshooting"
+    icon="wrench"
+    href="/authentication/moongate-sdk/troubleshooting"
+  >
+    Common integration issues
+  </Card>
+</CardGroup>

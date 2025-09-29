@@ -1,0 +1,409 @@
+---
+title: "Troubleshooting"
+description: "Common issues and solutions for Moongate SDK integration."
+---
+
+# Troubleshooting
+
+Common issues and solutions when integrating the Moongate SDK.
+
+## 🔧 Installation Issues
+
+### Package Not Found
+
+**Problem**: `npm install @moongate/sdk` fails with "package not found"
+
+**Solutions**:
+- Verify you have internet connection
+- Clear npm cache: `npm cache clean --force`
+- Try with yarn: `yarn add @moongate/sdk`
+- Check if you're behind a corporate firewall
+
+```bash
+# Clear npm cache and retry
+npm cache clean --force
+rm -rf node_modules package-lock.json
+npm install
+```
+
+### TypeScript Errors
+
+**Problem**: TypeScript compilation errors with Moongate SDK
+
+**Solutions**:
+- Ensure you're using TypeScript 4.0+
+- Add type declarations if needed
+- Check your `tsconfig.json` configuration
+
+```json tsconfig.json
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx"
+  }
+}
+```
+
+## 🔑 API Key Issues
+
+### Invalid API Key
+
+**Problem**: "Invalid API key" error when using the SDK
+
+**Solutions**:
+- Verify your API key is correct (no extra spaces)
+- Check if your account is approved in the partner dashboard
+- Ensure you're using the right environment (dev/prod)
+
+```tsx
+// Correct API key usage
+<MoonGateProvider apiKey={process.env.NEXT_PUBLIC_MOONGATE_API_KEY}>
+  {children}
+</MoonGateProvider>
+```
+
+### Environment Variables Not Working
+
+**Problem**: Environment variables not loading correctly
+
+**Solutions**:
+
+<Tabs>
+  <Tab title="Create React App">
+    - Use `REACT_APP_` prefix for Create React App
+    - Restart development server after adding variables
+    - Check `.env` file is in project root
+
+    ```bash .env
+    REACT_APP_MOONGATE_API_KEY=your-api-key-here
+    ```
+  </Tab>
+  
+  <Tab title="Vite">
+    - Use `VITE_` prefix for Vite applications
+    - Restart development server after adding variables
+
+    ```bash .env
+    VITE_MOONGATE_API_KEY=your-api-key-here
+    ```
+  </Tab>
+</Tabs>
+
+## 🔌 Wallet Connection Issues
+
+### Wallet Not Connecting
+
+**Problem**: Wallet connection fails or hangs
+
+**Solutions**:
+1. **Check wallet is installed and unlocked**
+2. **Verify network configuration**
+3. **Check browser console for errors**
+4. **Try different wallet**
+
+```tsx
+// Debug wallet connection
+const { connected, connecting, wallet } = useWallet();
+
+console.log('Connection state:', { connected, connecting, wallet });
+```
+
+### Phantom Wallet Issues
+
+**Problem**: Phantom wallet not appearing or connecting
+
+**Solutions**:
+- Ensure Phantom extension is installed
+- Check if Phantom is unlocked
+- Try refreshing the page
+- Clear browser cache
+
+```tsx
+// Check if Phantom is available
+useEffect(() => {
+  if (window.solana?.isPhantom) {
+    console.log('Phantom wallet detected');
+  } else {
+    console.log('Phantom wallet not found');
+  }
+}, []);
+```
+
+### Mobile Wallet Issues
+
+**Problem**: Wallet connection issues on mobile devices
+
+**Solutions**:
+- Use wallet's mobile app browser
+- Ensure deep linking is configured
+- Check mobile wallet compatibility
+
+## 🌐 Network Issues
+
+### Wrong Network
+
+**Problem**: Transactions failing due to network mismatch
+
+**Solutions**:
+- Verify your app and wallet are on the same network
+- Check network configuration in MoonGateProvider
+
+```tsx
+// Ensure network consistency
+<MoonGateProvider 
+  apiKey="your-api-key"
+  network="mainnet" // or "devnet"
+>
+  {children}
+</MoonGateProvider>
+```
+
+### RPC Connection Issues
+
+**Problem**: RPC calls failing or timing out
+
+**Solutions**:
+- Check internet connection
+- Verify Solana network status
+- Try different RPC endpoint
+
+```tsx
+// Debug connection issues
+const { connection } = useConnection();
+
+useEffect(() => {
+  const checkConnection = async () => {
+    try {
+      const version = await connection.getVersion();
+      console.log('RPC Version:', version);
+    } catch (error) {
+      console.error('RPC Connection failed:', error);
+    }
+  };
+  
+  checkConnection();
+}, [connection]);
+```
+
+## 🎨 Styling Issues
+
+### Styles Not Loading
+
+**Problem**: Moongate SDK styles not appearing correctly
+
+**Solutions**:
+- Ensure you've imported the CSS file
+- Check import order (import CSS before your styles)
+- Verify CSS is not being overridden
+
+```tsx
+// Correct CSS import
+import '@moongate/sdk/styles.css';
+import './your-custom-styles.css'; // Import after SDK styles
+```
+
+### CSS Conflicts
+
+**Problem**: Your app styles conflicting with SDK styles
+
+**Solutions**:
+- Use CSS specificity
+- Implement CSS modules
+- Use the CSS scoping feature
+
+```css
+/* Override SDK styles with higher specificity */
+.your-app .moongate-connect-button {
+  background-color: your-color !important;
+}
+```
+
+### Dark Mode Issues
+
+**Problem**: Dark mode not working correctly
+
+**Solutions**:
+- Set theme in MoonGateProvider config
+- Ensure CSS custom properties are defined
+- Check system theme detection
+
+```tsx
+<MoonGateProvider 
+  config={{ 
+    theme: 'dark' // or 'light' or 'auto'
+  }}
+>
+  {children}
+</MoonGateProvider>
+```
+
+## ⚛️ React Issues
+
+### Hook Errors
+
+**Problem**: "useWallet must be used within MoonGateProvider"
+
+**Solutions**:
+- Ensure component is wrapped in MoonGateProvider
+- Check provider is at correct level in component tree
+- Verify provider props are correct
+
+```tsx
+// Correct provider usage
+function App() {
+  return (
+    <MoonGateProvider apiKey="your-key">
+      <WalletComponent /> {/* ✅ This works */}
+    </MoonGateProvider>
+  );
+}
+
+function WalletComponent() {
+  const { connected } = useWallet(); // ✅ This works
+  return <div>{connected ? 'Connected' : 'Not connected'}</div>;
+}
+```
+
+### State Updates
+
+**Problem**: Wallet state not updating correctly
+
+**Solutions**:
+- Check if you're using the latest SDK version
+- Ensure proper cleanup in useEffect
+- Verify event listeners are working
+
+```tsx
+// Proper state management
+const { connected, publicKey } = useWallet();
+
+useEffect(() => {
+  console.log('Wallet state changed:', { connected, publicKey });
+}, [connected, publicKey]);
+```
+
+## 🔍 Debug Mode
+
+Enable debug mode to get more detailed logging:
+
+```tsx
+<MoonGateProvider 
+  config={{ 
+    debug: true // Enable debug logging
+  }}
+>
+  {children}
+</MoonGateProvider>
+```
+
+## 📊 Performance Issues
+
+### Slow Loading
+
+**Problem**: SDK loading slowly or blocking render
+
+**Solutions**:
+- Use code splitting
+- Implement lazy loading
+- Optimize bundle size
+
+```tsx
+// Lazy load wallet components
+const WalletModal = lazy(() => import('@moongate/sdk').then(module => ({
+  default: module.WalletModal
+})));
+```
+
+### Memory Leaks
+
+**Problem**: Memory leaks with wallet connections
+
+**Solutions**:
+- Proper cleanup in useEffect
+- Disconnect wallet on unmount
+- Remove event listeners
+
+```tsx
+useEffect(() => {
+  // Setup
+  return () => {
+    // Cleanup
+    disconnect();
+  };
+}, []);
+```
+
+## 🆘 Getting Help
+
+If you're still experiencing issues:
+
+### Before Asking for Help
+
+1. **Check the console** for error messages
+2. **Try the latest SDK version**
+3. **Test with different wallets**
+4. **Check network connectivity**
+5. **Review your API key setup**
+
+### How to Report Issues
+
+When reporting issues, please include:
+
+- SDK version
+- Framework and version (Next.js, React, etc.)
+- Browser and version
+- Error messages or console logs
+- Minimal reproduction code
+
+### Support Channels
+
+<CardGroup cols={2}>
+  <Card
+    title="Discord Community"
+    icon="discord"
+    href="https://discord.gg/moongate"
+  >
+    Get help from the community and team
+  </Card>
+  <Card
+    title="GitHub Issues"
+    icon="github"
+    href="https://github.com/moongate/sdk/issues"
+  >
+    Report bugs and feature requests
+  </Card>
+  <Card
+    title="Email Support"
+    icon="envelope"
+    href="mailto:support@moongate.one"
+  >
+    Direct support from our team
+  </Card>
+  <Card
+    title="Documentation"
+    icon="book"
+    href="https://docs.moongate.one"
+  >
+    Complete documentation and guides
+  </Card>
+</CardGroup>
+
+## 🔧 Common Error Codes
+
+| Error Code | Description | Solution |
+|------------|-------------|----------|
+| `MOONGATE_001` | Invalid API key | Check API key format and permissions |
+| `MOONGATE_002` | Network mismatch | Verify app and wallet network settings |
+| `MOONGATE_003` | Wallet not found | Ensure wallet is installed and available |
+| `MOONGATE_004` | Connection timeout | Check internet connection and RPC status |
+| `MOONGATE_005` | Transaction failed | Review transaction data and network fees |
+
+## 🚀 Performance Tips
+
+- Use `React.memo` for wallet components that don't need frequent updates
+- Implement proper loading states
+- Cache wallet connection state when appropriate
+- Use error boundaries for graceful error handling
+- Minimize re-renders with proper dependency arrays

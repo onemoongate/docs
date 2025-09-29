@@ -1,0 +1,481 @@
+---
+title: "API Reference"
+description: "Complete reference for all Moongate SDK hooks, components, and configuration options."
+---
+
+# API Reference
+
+Complete reference documentation for all Moongate SDK hooks, components, and configuration options.
+
+## 🎣 Hooks
+
+### useWallet()
+
+The primary hook for accessing wallet state and methods.
+
+```tsx
+import { useWallet } from '@moongate/sdk';
+
+const { connected, publicKey, disconnect, connecting } = useWallet();
+```
+
+#### Returns
+
+<ResponseField name="connected" type="boolean">
+  Whether a wallet is currently connected
+</ResponseField>
+
+<ResponseField name="publicKey" type="PublicKey | null">
+  The connected wallet's public key, or null if not connected
+</ResponseField>
+
+<ResponseField name="disconnect" type="() => void">
+  Function to disconnect the current wallet
+</ResponseField>
+
+<ResponseField name="connecting" type="boolean">
+  Whether a wallet connection is currently in progress
+</ResponseField>
+
+<ResponseField name="wallet" type="Wallet | null">
+  The currently connected wallet adapter instance
+</ResponseField>
+
+#### Example Usage
+
+```tsx
+function WalletStatus() {
+  const { connected, publicKey, disconnect, connecting } = useWallet();
+
+  if (connecting) return <div>Connecting...</div>;
+  
+  if (connected) {
+    return (
+      <div>
+        <p>Connected: {publicKey?.toString().slice(0, 8)}...</p>
+        <button onClick={disconnect}>Disconnect</button>
+      </div>
+    );
+  }
+
+  return <div>Not connected</div>;
+}
+```
+
+### useConnection()
+
+Hook for accessing the Solana connection instance.
+
+```tsx
+import { useConnection } from '@moongate/sdk';
+
+const { connection } = useConnection();
+```
+
+#### Returns
+
+<ResponseField name="connection" type="Connection">
+  The Solana connection instance for making RPC calls
+</ResponseField>
+
+#### Example Usage
+
+```tsx
+function BalanceChecker() {
+  const { connection } = useConnection();
+  const { publicKey } = useWallet();
+  const [balance, setBalance] = useState<number | null>(null);
+
+  const getBalance = async () => {
+    if (!publicKey) return;
+    
+    const walletBalance = await connection.getBalance(publicKey);
+    setBalance(walletBalance / LAMPORTS_PER_SOL);
+  };
+
+  return (
+    <div>
+      <button onClick={getBalance}>Get Balance</button>
+      {balance !== null && <p>Balance: {balance} SOL</p>}
+    </div>
+  );
+}
+```
+
+### useWalletModal()
+
+Hook for controlling the wallet selection modal.
+
+```tsx
+import { useWalletModal } from '@moongate/sdk';
+
+const { visible, setVisible } = useWalletModal();
+```
+
+#### Returns
+
+<ResponseField name="visible" type="boolean">
+  Whether the wallet modal is currently visible
+</ResponseField>
+
+<ResponseField name="setVisible" type="(visible: boolean) => void">
+  Function to show or hide the wallet modal
+</ResponseField>
+
+#### Example Usage
+
+```tsx
+function CustomConnectButton() {
+  const { connected } = useWallet();
+  const { setVisible } = useWalletModal();
+
+  if (connected) return null;
+
+  return (
+    <button onClick={() => setVisible(true)}>
+      Choose Wallet
+    </button>
+  );
+}
+```
+
+## 🧩 Components
+
+### MoongateConnectButton
+
+The main connect button component (recommended for most use cases).
+
+```tsx
+import { MoongateConnectButton } from '@moongate/sdk';
+
+<MoongateConnectButton />
+```
+
+#### Props
+
+<ResponseField name="children" type="ReactNode" default="Connect Wallet">
+  Custom button text or content
+</ResponseField>
+
+<ResponseField name="className" type="string">
+  Additional CSS classes to apply
+</ResponseField>
+
+<ResponseField name="style" type="CSSProperties">
+  Inline styles to apply
+</ResponseField>
+
+#### Example Usage
+
+```tsx
+// Basic usage
+<MoongateConnectButton />
+
+// With custom text
+<MoongateConnectButton>
+  Connect to Solana
+</MoongateConnectButton>
+
+// With custom styling
+<MoongateConnectButton 
+  className="my-custom-button"
+  style={{ backgroundColor: '#purple' }}
+>
+  Connect Wallet
+</MoongateConnectButton>
+```
+
+### WalletModal
+
+Standalone wallet selection modal component.
+
+```tsx
+import { WalletModal } from '@moongate/sdk';
+
+<WalletModal />
+```
+
+#### Props
+
+<ResponseField name="onClose" type="() => void">
+  Callback function called when the modal is closed
+</ResponseField>
+
+#### Example Usage
+
+```tsx
+function CustomWalletFlow() {
+  const [showModal, setShowModal] = useState(false);
+
+  return (
+    <div>
+      <button onClick={() => setShowModal(true)}>
+        Select Wallet
+      </button>
+      
+      {showModal && (
+        <WalletModal onClose={() => setShowModal(false)} />
+      )}
+    </div>
+  );
+}
+```
+
+### WalletPreview
+
+Inline wallet display component without modal functionality.
+
+```tsx
+import { WalletPreview } from '@moongate/sdk';
+
+<WalletPreview />
+```
+
+#### Props
+
+<ResponseField name="showDisconnect" type="boolean" default="true">
+  Whether to show the disconnect button
+</ResponseField>
+
+<ResponseField name="className" type="string">
+  Additional CSS classes to apply
+</ResponseField>
+
+#### Example Usage
+
+```tsx
+// Basic usage
+<WalletPreview />
+
+// Without disconnect button
+<WalletPreview showDisconnect={false} />
+
+// With custom styling
+<WalletPreview className="wallet-preview-custom" />
+```
+
+### WalletConnectButton
+
+Individual wallet connect button for specific wallets.
+
+```tsx
+import { WalletConnectButton } from '@moongate/sdk';
+
+<WalletConnectButton walletName="Phantom" />
+```
+
+#### Props
+
+<ResponseField name="walletName" type="string" required>
+  Name of the specific wallet to connect to
+</ResponseField>
+
+<ResponseField name="children" type="ReactNode">
+  Custom button content
+</ResponseField>
+
+#### Example Usage
+
+```tsx
+// Connect to specific wallet
+<WalletConnectButton walletName="Phantom">
+  Connect with Phantom
+</WalletConnectButton>
+
+<WalletConnectButton walletName="Solflare">
+  Connect with Solflare
+</WalletConnectButton>
+```
+
+### WalletListItem
+
+Individual wallet list item component.
+
+```tsx
+import { WalletListItem } from '@moongate/sdk';
+
+<WalletListItem wallet={wallet} onClick={handleClick} />
+```
+
+#### Props
+
+<ResponseField name="wallet" type="Wallet" required>
+  The wallet adapter instance
+</ResponseField>
+
+<ResponseField name="onClick" type="() => void">
+  Click handler function
+</ResponseField>
+
+## ⚙️ Configuration
+
+### MoonGateProvider Props
+
+Configuration options for the MoonGateProvider component.
+
+```tsx
+<MoonGateProvider
+  apiKey="your-api-key"
+  network="devnet"
+  config={{
+    autoConnect: true,
+    theme: 'dark'
+  }}
+>
+  {children}
+</MoonGateProvider>
+```
+
+#### Props
+
+<ResponseField name="apiKey" type="string" required>
+  Your Moongate API key from the partner dashboard
+</ResponseField>
+
+<ResponseField name="network" type="'mainnet' | 'devnet' | 'testnet'" default="'devnet'">
+  Solana network to connect to
+</ResponseField>
+
+<ResponseField name="config" type="MoongateConfig">
+  Additional configuration options
+</ResponseField>
+
+<ResponseField name="children" type="ReactNode" required>
+  Child components
+</ResponseField>
+
+### MoongateConfig Options
+
+<ResponseField name="autoConnect" type="boolean" default="false">
+  Whether to automatically connect to the last used wallet on page load
+</ResponseField>
+
+<ResponseField name="theme" type="'light' | 'dark' | 'auto'" default="'auto'">
+  Theme preference for the wallet modal
+</ResponseField>
+
+<ResponseField name="position" type="'center' | 'top' | 'bottom'" default="'center'">
+  Modal position on screen
+</ResponseField>
+
+<ResponseField name="onConnect" type="(publicKey: PublicKey) => void">
+  Callback function called when a wallet connects
+</ResponseField>
+
+<ResponseField name="onDisconnect" type="() => void">
+  Callback function called when a wallet disconnects
+</ResponseField>
+
+<ResponseField name="onError" type="(error: Error) => void">
+  Callback function called when an error occurs
+</ResponseField>
+
+## 🎨 Styling and Theming
+
+### CSS Custom Properties
+
+The SDK uses CSS custom properties for theming:
+
+```css
+:root {
+  --moongate-primary-color: #5C35B1;
+  --moongate-secondary-color: #8d60f0;
+  --moongate-background-color: #ffffff;
+  --moongate-text-color: #333333;
+  --moongate-border-radius: 8px;
+  --moongate-font-family: 'Inter', sans-serif;
+}
+```
+
+### Custom CSS Classes
+
+Available CSS classes for customization:
+
+- `.moongate-connect-button` - Main connect button
+- `.moongate-modal` - Wallet selection modal
+- `.moongate-wallet-item` - Individual wallet items
+- `.moongate-connected-state` - Connected wallet display
+
+### Example Custom Styling
+
+```css
+/* Custom button styling */
+.moongate-connect-button {
+  background: linear-gradient(45deg, #5C35B1, #8d60f0);
+  border-radius: 12px;
+  font-weight: 600;
+  padding: 12px 24px;
+}
+
+/* Custom modal styling */
+.moongate-modal {
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+}
+
+/* Custom wallet item styling */
+.moongate-wallet-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+```
+
+## 🔗 TypeScript Types
+
+### Core Types
+
+```tsx
+import type { 
+  PublicKey, 
+  Connection, 
+  Transaction,
+  Wallet
+} from '@moongate/sdk';
+
+interface WalletContextState {
+  connected: boolean;
+  publicKey: PublicKey | null;
+  connecting: boolean;
+  disconnecting: boolean;
+  wallet: Wallet | null;
+  disconnect(): Promise<void>;
+}
+
+interface ConnectionContextState {
+  connection: Connection;
+}
+```
+
+### Configuration Types
+
+```tsx
+interface MoongateConfig {
+  autoConnect?: boolean;
+  theme?: 'light' | 'dark' | 'auto';
+  position?: 'center' | 'top' | 'bottom';
+  onConnect?: (publicKey: PublicKey) => void;
+  onDisconnect?: () => void;
+  onError?: (error: Error) => void;
+}
+
+type NetworkType = 'mainnet' | 'devnet' | 'testnet';
+```
+
+## 📱 Mobile Considerations
+
+The SDK is fully responsive and mobile-optimized:
+
+- Touch-friendly wallet selection
+- Mobile wallet deep linking
+- Responsive modal sizing
+- iOS/Android wallet app integration
+
+## 🔒 Security Best Practices
+
+- Never store private keys in your application
+- Always validate transaction data before signing
+- Use HTTPS in production
+- Implement proper error handling
+- Keep your API key secure
+
+For more security information, see our [security best practices guide](https://docs.moongate.one/security).

@@ -1,0 +1,117 @@
+---
+title: "Installation & Setup"
+description: "Install the Moongate SDK and get your API key in just 60 seconds."
+---
+
+# Installation & Setup
+
+Get your Moongate SDK installed and configured in just 60 seconds.
+
+## 📦 Step 1: Install the SDK (30 seconds)
+
+Choose your preferred package manager:
+
+<CodeGroup>
+
+```bash npm
+npm install @moongate/sdk
+```
+
+```bash yarn
+yarn add @moongate/sdk
+```
+
+```bash pnpm
+pnpm add @moongate/sdk
+```
+
+</CodeGroup>
+
+<Frame caption="Installation command examples showing npm, yarn, and pnpm options">
+  {/* Add terminal screenshot showing the installation commands */}
+</Frame>
+
+## 🎨 Step 2: Get Your API Key (30 seconds) {#api-key}
+
+### Create Your Account
+
+1. Visit [partner.moongate.one](https://partner.moongate.one)
+2. Create an account and wait for the admins to assign you to get your API key
+3. Configure your brand colors and wallet preferences in the dashboard
+
+<Frame caption="Partner dashboard showing API key generation and configuration options">
+  {/* Add screenshot of the partner dashboard interface */}
+</Frame>
+
+### Dashboard Configuration
+
+Your wallet configuration (colors, logo, wallet selection) is automatically fetched from your partner dashboard. Configure:
+
+- **Brand Colors** - Primary, secondary, and accent colors
+- **Logo** - Your brand logo for the wallet modal
+- **Wallet Selection** - Choose which wallets to display
+- **Network Settings** - Mainnet or Devnet configuration
+
+<Frame caption="Dashboard configuration options showing brand customization">
+  {/* Add screenshot showing brand customization options */}
+</Frame>
+
+## 🔧 Basic Setup
+
+### Import Styles
+
+Make sure to import the CSS styles in your main application file:
+
+```tsx
+import '@moongate/sdk/styles.css';
+```
+
+### Environment Variables
+
+Optionally, you can store your API key in environment variables:
+
+<CodeGroup>
+
+```bash .env (Create React App)
+REACT_APP_MOONGATE_API_KEY=your-api-key-here
+```
+
+```bash .env (Vite)
+VITE_MOONGATE_API_KEY=your-api-key-here
+```
+
+</CodeGroup>
+
+## ✅ Verification
+
+To verify your installation is working correctly:
+
+1. Check that the package is installed: `npm list @moongate/sdk`
+2. Ensure your API key is valid by testing it in the dashboard
+3. Proceed to your framework-specific integration guide
+
+## 📖 Next Steps
+
+Continue with the React  guide:
+
+<Card
+  title="Integration"
+  icon="react"
+  href="/authentication/moongate-sdk/react"
+>
+  Complete React setup guide for Create React App, Vite, and other React applications
+</Card>
+
+## 🐛 Installation Issues?
+
+**Package not found**
+- Ensure you're using npm, yarn, or pnpm
+- Check your internet connection
+- Try clearing your package manager cache
+
+**API Key issues**
+- Verify your account is approved in the partner dashboard
+- Check that you're using the correct API key
+- Ensure the key is properly formatted (no extra spaces)
+
+For more help, visit our [troubleshooting guide](/authentication/moongate-sdk/troubleshooting).

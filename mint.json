@@ -41,7 +41,17 @@
       ]
     },
     {
-      "group": "Integration Guide",
+      "group": "Moongate SDK",
+      "pages": [
+        "authentication/moongate-sdk/overview",
+        "authentication/moongate-sdk/installation",
+        "authentication/moongate-sdk/react",
+        "authentication/moongate-sdk/api-reference",
+        "authentication/moongate-sdk/troubleshooting"
+      ]
+    },
+    {
+      "group": "Legacy Integration Options",
       "pages": [
         "authentication/solana-sdk",
         "authentication/sdk-integration",
