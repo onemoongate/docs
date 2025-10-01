@@ -20,7 +20,7 @@
   ],
   "topbarCtaButton": {
     "name": "Get Started",
-    "url": "https://praneetsinha28.typeform.com/to/U8xKUZfP?typeform-source=www.moongate.one"
+    "url": "https://partner.moongate.one/"
   },
   "modeToggle": {
     "default": "dark",
@@ -41,11 +41,13 @@
       ]
     },
     {
-      "group": "Integration Guide",
+      "group": "Moongate SDK",
       "pages": [
-        "authentication/solana-sdk",
-        "authentication/sdk-integration",
-        "authentication/adapter-integration"
+        "authentication/moongate-sdk/overview",
+        "authentication/moongate-sdk/setup",
+        "authentication/moongate-sdk/react",
+        "authentication/moongate-sdk/api-reference",
+        "authentication/moongate-sdk/troubleshooting"
       ]
     }
   ],
