@@ -26,13 +26,7 @@
     "default": "dark",
     "isHidden": true
   },
-  "anchors": [
-    {
-      "name": "Community",
-      "icon": "discord",
-      "url": "https://discord.gg/yyzNVDcrCh"
-    }
-  ],
+ 
   "navigation": [
     {
       "group": "Welcome",
