@@ -44,10 +44,19 @@
       "group": "Moongate SDK",
       "pages": [
         "authentication/moongate-sdk/overview",
-        "authentication/moongate-sdk/installation",
+        "authentication/moongate-sdk/setup",
         "authentication/moongate-sdk/react",
         "authentication/moongate-sdk/api-reference",
         "authentication/moongate-sdk/troubleshooting"
+      ]
+    },
+    {
+      "group": "Partner Dashboard",
+      "pages": [
+        "partner-dashboard/overview",
+        "partner-dashboard/getting-started",
+        "partner-dashboard/tutorial",
+        "partner-dashboard/api-keys"
       ]
     },
     {

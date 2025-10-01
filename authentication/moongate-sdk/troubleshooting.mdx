@@ -309,12 +309,6 @@ Enable debug mode to get more detailed logging:
 - Implement lazy loading
 - Optimize bundle size
 
-```tsx
-// Lazy load wallet components
-const WalletModal = lazy(() => import('@moongate/sdk').then(module => ({
-  default: module.WalletModal
-})));
-```
 
 ### Memory Leaks
 
