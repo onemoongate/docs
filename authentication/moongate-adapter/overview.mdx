@@ -1,0 +1,102 @@
+---
+title: "Adapter Overview"
+description: "Complete documentation for the Moongate Adapter - a Solana wallet adapter with social login support"
+---
+
+# Moongate Adapter Documentation
+
+## Overview
+
+The Moongate Adapter is a Solana wallet adapter that provides seamless authentication and wallet functionality through various social login methods. It integrates with the Solana Wallet Standard and supports multiple authentication providers including Google, Apple, Twitter, and Ethereum.
+
+## Installation
+
+### Prerequisites
+
+- Node.js 16+
+- React 18+
+- Solana Web3.js
+- Solana Wallet Adapter packages
+
+### Install Dependencies
+
+```bash
+# Install the Moongate adapter
+npm install @moongate/moongate-adapter
+
+# Install required Solana wallet adapter packages
+npm install @solana/wallet-adapter-base @solana/wallet-adapter-react @solana/wallet-adapter-react-ui @solana/web3.js
+```
+
+### Package Dependencies
+
+The adapter requires the following peer dependencies:
+
+```json
+{
+  "@moongate/solana-wallet-sdk": "^3.3.4",
+  "@solana/wallet-standard-features": "^1.2.0",
+  "@solana/wallet-standard-chains": "^1.1.0",
+  "@solana/wallet-standard-util": "^1.1.1",
+  "@wallet-standard/app": "^1.0.1",
+  "@wallet-standard/base": "^1.0.1",
+  "@wallet-standard/wallet": "^1.0.1",
+  "@wallet-standard/features": "^1.0.1",
+  "bs58": "^6.0.0",
+  "@solana/web3.js": "^1.91.8"
+}
+```
+
+## Wallet Registration
+
+### Basic Registration
+
+```typescript
+import { registerMoonGateWallet } from '@moongate/moongate-adapter';
+
+// Register with Google authentication
+registerMoonGateWallet({
+  authMode: 'Google',
+  environment: 'production',
+});
+
+// Register with Apple authentication
+registerMoonGateWallet({
+  authMode: 'Apple',
+  environment: 'production',
+});
+
+// Register with Ethereum authentication
+registerMoonGateWallet({
+  authMode: 'Ethereum',
+  environment: 'production',
+});
+registerMoonGateWallet({
+  authMode: 'Twitter',
+  environment: 'production',
+});
+```
+
+### Configuration Options
+
+| Parameter       | Type     | Default                                  | Description                                                             |
+| --------------- | -------- | ---------------------------------------- | ----------------------------------------------------------------------- |
+| `authMode`      | `string` | `'Google'`                               | Authentication provider ('Google', 'Apple', 'Ethereum', 'Twitter')      |
+| `logoDataUri`   | `string` | `'Default'`                              | Custom logo data URI for the wallet                                     |
+| `position`      | `string` | `'top-right'`                            | Modal position ('top-right', 'top-left', 'bottom-right', 'bottom-left') |
+| `buttonLogoUri` | `string` | `'https://i.ibb.co/NjxF2zw/Image-3.png'` | Button logo URI                                                         |
+| `environment`   | `string` | `'production'`                           | Environment ('production', 'staging', 'development')                    |
+| `displayState`  | `string` | `undefined`                              | Display state ('fullscreen', 'minimized', 'hidden')                     |
+
+### Example Configuration
+
+```typescript
+registerMoonGateWallet({
+  authMode: 'Google',
+  logoDataUri: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTcxIiBoZWlnaHQ9IjE3MyI...',
+  position: 'top-right',
+  buttonLogoUri: 'https://your-custom-logo.com/logo.png',
+  environment: 'staging',
+  displayState: 'fullscreen',
+});
+```

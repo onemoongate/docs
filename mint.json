@@ -43,6 +43,15 @@
         "authentication/moongate-sdk/api-reference",
         "authentication/moongate-sdk/troubleshooting"
       ]
+    },
+    {
+      "group": "Moongate Adapter",
+      "pages": [
+        "authentication/moongate-adapter/overview",
+        "authentication/moongate-adapter/installation",
+        "authentication/moongate-adapter/api-reference",
+        "authentication/moongate-adapter/troubleshooting"
+      ]
     }
   ],
   "footerSocials": {

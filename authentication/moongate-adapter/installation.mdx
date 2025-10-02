@@ -1,0 +1,163 @@
+---
+title: "Installation Guide"
+description: "Step-by-step installation guide for the Moongate Adapter"
+---
+
+# Installation Guide
+
+## Prerequisites
+
+Before installing the Moongate Adapter, ensure you have the following:
+
+- **Node.js**: Version 16 or higher
+- **React**: Version 18 or higher
+- **Solana Web3.js**: Latest version
+- **Solana Wallet Adapter packages**: Required for integration
+
+## Installation Methods
+
+### Using npm
+
+```bash
+npm install @moongate/moongate-adapter
+```
+
+### Using yarn
+
+```bash
+yarn add @moongate/moongate-adapter
+```
+
+### Using pnpm
+
+```bash
+pnpm add @moongate/moongate-adapter
+```
+
+## Required Dependencies
+
+The Moongate Adapter requires several peer dependencies. Install them alongside the adapter:
+
+```bash
+# Core Solana packages
+npm install @solana/wallet-adapter-base @solana/wallet-adapter-react @solana/wallet-adapter-react-ui @solana/web3.js
+
+# Wallet Standard packages
+npm install @solana/wallet-standard-features @solana/wallet-standard-chains @solana/wallet-standard-util
+
+# Wallet Standard base packages
+npm install @wallet-standard/app @wallet-standard/base @wallet-standard/wallet @wallet-standard/features
+
+# Additional utilities
+npm install bs58
+```
+
+## Package.json Dependencies
+
+Your `package.json` should include these dependencies:
+
+```json
+{
+  "dependencies": {
+    "@moongate/moongate-adapter": "^1.0.0",
+    "@solana/wallet-adapter-base": "^0.9.23",
+    "@solana/wallet-adapter-react": "^0.15.35",
+    "@solana/wallet-adapter-react-ui": "^0.9.35",
+    "@solana/web3.js": "^1.91.8",
+    "@solana/wallet-standard-features": "^1.2.0",
+    "@solana/wallet-standard-chains": "^1.1.0",
+    "@solana/wallet-standard-util": "^1.1.1",
+    "@wallet-standard/app": "^1.0.1",
+    "@wallet-standard/base": "^1.0.1",
+    "@wallet-standard/wallet": "^1.0.1",
+    "@wallet-standard/features": "^1.0.1",
+    "bs58": "^6.0.0"
+  }
+}
+```
+
+## TypeScript Support
+
+The adapter includes full TypeScript support. If you're using TypeScript, no additional type definitions are required.
+
+### TypeScript Configuration
+
+Ensure your `tsconfig.json` includes the necessary compiler options:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
+  }
+}
+```
+
+## Verification
+
+After installation, verify that everything is working correctly:
+
+1. **Check package installation**:
+   ```bash
+   npm list @moongate/moongate-adapter
+   ```
+
+2. **Verify peer dependencies**:
+   ```bash
+   npm list @solana/wallet-adapter-base @solana/wallet-adapter-react
+   ```
+
+3. **Test import**:
+   ```typescript
+   import { registerMoonGateWallet } from '@moongate/moongate-adapter';
+   console.log('Moongate Adapter imported successfully');
+   ```
+
+## Next Steps
+
+Once installation is complete, proceed to:
+
+- [Quick Start Guide](/authentication/moongate-adapter/quick-start) - Get up and running in minutes
+- [Configuration Options](/authentication/moongate-adapter/configuration) - Customize the adapter
+- [API Reference](/authentication/moongate-adapter/api-reference) - Explore all available methods
+
+## Troubleshooting Installation
+
+### Common Issues
+
+#### Peer Dependency Warnings
+
+If you see peer dependency warnings, install the missing packages:
+
+```bash
+npm install --save-dev @types/react @types/react-dom
+```
+
+#### Version Conflicts
+
+If you encounter version conflicts, try using exact versions:
+
+```bash
+npm install @moongate/moongate-adapter@1.0.0 --save-exact
+```
+
+#### TypeScript Errors
+
+If you see TypeScript errors, ensure you have the latest version of the Solana packages:
+
+```bash
+npm update @solana/wallet-adapter-base @solana/wallet-adapter-react
+```
+
+
