@@ -1,54 +1,210 @@
 ---
 title: "API Reference"
-description: "Complete API reference for the Moongate Adapter"
+description: "Complete reference for all Moongate Adapter hooks, components, and configuration options."
 ---
 
-## registerMoonGateWallet
 
-Registers a new Moongate wallet adapter with the specified configuration.
+## Hooks
 
+### useWallet()
 
+The primary hook for accessing wallet state and methods.
 
-```typescript
-function registerMoonGateWallet(config: MoongateWalletConfig): void
+```tsx
+import { useWallet } from '@moongate/sdk';
+
+const { connected, publicKey, disconnect, connecting } = useWallet();
 ```
 
-### Parameters
+#### Returns
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `config` | `MoongateWalletConfig` | Yes | - | Configuration object for the wallet |
+<ResponseField name="connected" type="boolean">
+  Whether a wallet is currently connected
+</ResponseField>
 
-### MoongateWalletConfig
+<ResponseField name="publicKey" type="PublicKey | null">
+  The connected wallet's public key, or null if not connected
+</ResponseField>
 
-```typescript
-interface MoongateWalletConfig {
-  authMode: 'Google' | 'Apple' | 'Ethereum' | 'Twitter';
-  logoDataUri?: string;
-  position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
-  buttonLogoUri?: string;
-  environment?: 'production' | 'staging' | 'development';
-  displayState?: 'fullscreen' | 'minimized' | 'hidden';
+<ResponseField name="disconnect" type="() => void">
+  Function to disconnect the current wallet
+</ResponseField>
+
+<ResponseField name="connecting" type="boolean">
+  Whether a wallet connection is currently in progress
+</ResponseField>
+
+<ResponseField name="wallet" type="Wallet | null">
+  The currently connected wallet adapter instance
+</ResponseField>
+
+#### Example Usage
+
+```tsx
+function WalletStatus() {
+  const { connected, publicKey, disconnect, connecting } = useWallet();
+
+  if (connecting) return <div>Connecting...</div>;
+  
+  if (connected) {
+    return (
+      <div>
+        <p>Connected: {publicKey?.toString().slice(0, 8)}...</p>
+        <button onClick={disconnect}>Disconnect</button>
+      </div>
+    );
+  }
+
+  return <div>Not connected</div>;
 }
 ```
 
-### Example
+### useConnection()
 
-```typescript
-import { registerMoonGateWallet } from '@moongate/moongate-adapter';
+Hook for accessing the Solana connection instance.
 
-registerMoonGateWallet({
-  authMode: 'Google',
-  environment: 'production',
-  position: 'top-right',
-  displayState: 'fullscreen'
-});
+```tsx
+import { useConnection } from '@moongate/sdk';
+
+const { connection } = useConnection();
 ```
+
+#### Returns
+
+<ResponseField name="connection" type="Connection">
+  The Solana connection instance for making RPC calls
+</ResponseField>
+
+
+### useWalletModal()
+
+Hook for controlling the wallet selection modal.
+
+```tsx
+import { useWalletModal } from '@moongate/sdk';
+
+const { visible, setVisible } = useWalletModal();
+```
+
+#### Returns
+
+<ResponseField name="visible" type="boolean">
+  Whether the wallet modal is currently visible
+</ResponseField>
+
+<ResponseField name="setVisible" type="(visible: boolean) => void">
+  Function to show or hide the wallet modal
+</ResponseField>
+
+#### Example Usage
+
+```tsx
+function CustomConnectButton() {
+  const { connected } = useWallet();
+  const { setVisible } = useWalletModal();
+
+  if (connected) return null;
+
+  return (
+    <button onClick={() => setVisible(true)}>
+      Choose Wallet
+    </button>
+  );
+}
+```
+
+## Components
+
+### MoongateConnectButton
+
+The main connect button component (recommended for most use cases).
+
+```tsx
+import { MoongateConnectButton } from '@moongate/sdk';
+
+<MoongateConnectButton />
+```
+
+#### Props
+
+<ResponseField name="children" type="ReactNode" default="Connect Wallet">
+  Custom button text or content
+</ResponseField>
+
+<ResponseField name="className" type="string">
+  Additional CSS classes to apply
+</ResponseField>
+
+<ResponseField name="style" type="CSSProperties">
+  Inline styles to apply
+</ResponseField>
+
+#### Example Usage
+
+```tsx
+// Basic usage
+<MoongateConnectButton />
+
+// With custom text
+<MoongateConnectButton>
+  Connect to Solana
+</MoongateConnectButton>
+
+// With custom styling
+<MoongateConnectButton 
+  className="my-custom-button"
+  style={{ backgroundColor: '#purple' }}
+>
+  Connect Wallet
+</MoongateConnectButton>
+```
+
+
+
+### WalletConnectButton
+
+Individual wallet connect button for specific wallets.
+
+```tsx
+import { WalletConnectButton } from '@moongate/sdk';
+
+<WalletConnectButton walletName="Phantom" />
+```
+
+#### Props
+
+<ResponseField name="walletName" type="string" required>
+  Name of the specific wallet to connect to
+</ResponseField>
+
+<ResponseField name="children" type="ReactNode">
+  Custom button content
+</ResponseField>
+
+#### Example Usage
+
+```tsx
+// Connect to specific wallet
+<WalletConnectButton walletName="Phantom"/>
+
+<WalletConnectButton walletName="Solflare"/>
+
+```
+
+
+
+
+## 📱 Mobile Considerations
+
+The Adapter is fully responsive and mobile-optimized:
+
+- Touch-friendly wallet selection
+- Mobile wallet deep linking
+- Responsive modal sizing
+- iOS/Android wallet app integration
 
 ## 🆘 Need Help?
 
 - 📧 Email: amen@moongate.one or praneet@moongate.one
 - 💬 Telegram: [@and_its_praneet](https://t.me/and_its_praneet)
 - 🐛 Issues: Message us on [web.moongate.one](https://web.moongate.one)
-
- 

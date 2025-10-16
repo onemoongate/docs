@@ -1,93 +1,68 @@
 ---
 title: "Troubleshooting"
-description: "Common issues and solutions for the Moongate Adapter"
+description: "Common issues and solutions for Moongate Adapter integration."
 ---
 
-# Troubleshooting
+## 🔧 Installation Issues
 
-## Common Issues
+### Package Not Found
 
-### Wallet Not Appearing in Modal
-
-**Problem**: The Moongate wallet doesn't appear in the wallet selection modal.
-
-**Possible Causes**:
-- Wallet not registered before WalletProvider initialization
-- Incorrect wallet name used in select()
-- Missing peer dependencies
+**Problem**: `npm install @moongate/sdk` fails with "package not found"
 
 **Solutions**:
+- Verify you have internet connection
+- Clear npm cache: `npm cache clean --force`
+- Try with yarn: `yarn add @moongate/sdk`
+- Check if you're behind a corporate firewall
 
-1. **Ensure proper registration order**:
-   ```typescript
-   // ✅ Correct - Register before app initialization
-   import { registerMoonGateWallet } from '@moongate/moongate-adapter';
-   
-   registerMoonGateWallet({
-     authMode: 'Google',
-     environment: 'production'
-   });
-   
-   // Then initialize your app
-   ReactDOM.render(<App />, document.getElementById('root'));
-   ```
+```bash
+# Clear npm cache and retry
+npm cache clean --force
+rm -rf node_modules package-lock.json
+npm install
+```
 
-2. **Check wallet names**:
-   ```typescript
-   // ✅ Correct wallet names
-   select('Sign in with Google');
-   select('Sign in with Apple');
-   select('Ethereum Wallet');
-   select('Sign in with Twitter');
-   ```
+### TypeScript Errors
 
-3. **Verify peer dependencies**:
-   ```bash
-   npm list @solana/wallet-adapter-base @solana/wallet-adapter-react
-   ```
-
-### Authentication Fails
-
-**Problem**: Users can't authenticate with their social accounts.
-
-**Possible Causes**:
-- Incorrect environment configuration
-- Missing API keys or configuration
-- Network connectivity issues
-- Browser compatibility issues
+**Problem**: TypeScript compilation errors with Moongate Adapter
 
 **Solutions**:
+- Ensure you're using TypeScript 4.0+
+- Add type declarations if needed
+- Check your `tsconfig.json` configuration
 
-1. **Check environment configuration**:
-   ```typescript
-   // For development
-   registerMoonGateWallet({
-     authMode: 'Google',
-     environment: 'development'
-   });
-   
-   // For production
-   registerMoonGateWallet({
-     authMode: 'Google',
-     environment: 'production'
-   });
-   ```
+```json tsconfig.json
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx"
+  }
+}
+```
 
-2. **Verify browser compatibility**:
-   - Ensure you're using a modern browser
-   - Check if popup blockers are enabled
-   - Verify third-party cookies are allowed
+## 🔑 API Key Issues
 
-3. **Check network connectivity**:
-   ```typescript
-   // Test network connectivity
-   fetch('https://api.moongate.one/health')
-     .then(response => console.log('Network OK'))
-     .catch(error => console.error('Network error:', error));
-   ```
+### Invalid API Key
+
+**Problem**: "Invalid API key" error when using the Adapter
+
+**Solutions**:
+- Verify your API key is correct (no extra spaces)
+- Check if your account is approved in the partner dashboard
+- Ensure you're using the right environment (dev/prod)
+
+```tsx
+// Correct API key usage
+<MoonGateProvider apiKey={process.env.NEXT_PUBLIC_MOONGATE_API_KEY}>
+  {children}
+</MoonGateProvider>
+```
 
 ## 🆘 Need Help?
 
 - 📧 Email: amen@moongate.one or praneet@moongate.one
 - 💬 Telegram: [@and_its_praneet](https://t.me/and_its_praneet)
+- 📞 Schedule a call: [Book a call with Praneet](https://calendly.com/moongate-founders/30min)
 - 🐛 Issues: Message us on [web.moongate.one](https://web.moongate.one)

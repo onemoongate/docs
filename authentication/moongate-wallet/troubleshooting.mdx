@@ -1,0 +1,94 @@
+---
+title: "Troubleshooting"
+description: "Common issues and solutions for Inject Moongate Wallet"
+---
+
+# Troubleshooting
+
+## Common Issues
+
+### Wallet Not Appearing in Modal
+
+**Problem**: The Moongate wallet doesn't appear in the wallet selection modal.
+
+**Possible Causes**:
+- Wallet not registered before WalletProvider initialization
+- Incorrect wallet name used in select()
+- Missing peer dependencies
+
+**Solutions**:
+
+1. **Ensure proper registration order**:
+   ```typescript
+   // ✅ Correct - Register before app initialization
+   import { registerMoonGateWallet } from '@moongate/moongate-adapter';
+   
+   registerMoonGateWallet({
+     authMode: 'Google',
+     environment: 'production'
+   });
+   
+   // Then initialize your app
+   ReactDOM.render(<App />, document.getElementById('root'));
+   ```
+
+2. **Check wallet names**:
+   ```typescript
+   // ✅ Correct wallet names
+   select('Sign in with Google');
+   select('Sign in with Apple');
+   select('Ethereum Wallet');
+   select('Sign in with Twitter');
+   ```
+
+3. **Verify peer dependencies**:
+   ```bash
+   npm list @solana/wallet-adapter-base @solana/wallet-adapter-react
+   ```
+
+### Authentication Fails
+
+**Problem**: Users can't authenticate with their social accounts.
+
+**Possible Causes**:
+- Incorrect environment configuration
+- Missing API keys or configuration
+- Network connectivity issues
+- Browser compatibility issues
+
+**Solutions**:
+
+1. **Check environment configuration**:
+   ```typescript
+   // For development
+   registerMoonGateWallet({
+     authMode: 'Google',
+     environment: 'development'
+   });
+   
+   // For production
+   registerMoonGateWallet({
+     authMode: 'Google',
+     environment: 'production'
+   });
+   ```
+
+2. **Verify browser compatibility**:
+   - Ensure you're using a modern browser
+   - Check if popup blockers are enabled
+   - Verify third-party cookies are allowed
+
+3. **Check network connectivity**:
+   ```typescript
+   // Test network connectivity
+   fetch('https://api.moongate.one/health')
+     .then(response => console.log('Network OK'))
+     .catch(error => console.error('Network error:', error));
+   ```
+
+## 🆘 Need Help?
+
+- 📧 Email: amen@moongate.one or praneet@moongate.one
+- 💬 Telegram: [@and_its_praneet](https://t.me/and_its_praneet)
+- 📞 Schedule a call: [Book a call with Praneet](https://calendly.com/moongate-founders/30min)
+- 🐛 Issues: Message us on [web.moongate.one](https://web.moongate.one)

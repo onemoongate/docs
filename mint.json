@@ -35,22 +35,22 @@
       ]
     },
     {
-      "group": "Moongate SDK",
-      "pages": [
-        "authentication/moongate-sdk/overview",
-        "authentication/moongate-sdk/setup",
-        "authentication/moongate-sdk/react",
-        "authentication/moongate-sdk/api-reference",
-        "authentication/moongate-sdk/troubleshooting"
-      ]
-    },
-    {
       "group": "Moongate Adapter",
       "pages": [
         "authentication/moongate-adapter/overview",
-        "authentication/moongate-adapter/installation",
+        "authentication/moongate-adapter/setup",
+        "authentication/moongate-adapter/react",
         "authentication/moongate-adapter/api-reference",
         "authentication/moongate-adapter/troubleshooting"
+      ]
+    },
+    {
+      "group": "Moongate Wallet",
+      "pages": [
+        "authentication/moongate-wallet/overview",
+        "authentication/moongate-wallet/installation",
+        "authentication/moongate-wallet/api-reference",
+        "authentication/moongate-wallet/troubleshooting"
       ]
     }
   ],

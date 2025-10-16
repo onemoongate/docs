@@ -1,0 +1,54 @@
+---
+title: "API Reference"
+description: "Complete API reference for Inject Moongate Wallet"
+---
+
+## registerMoonGateWallet
+
+Registers a new Moongate wallet adapter with the specified configuration.
+
+
+
+```typescript
+function registerMoonGateWallet(config: MoongateWalletConfig): void
+```
+
+### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `config` | `MoongateWalletConfig` | Yes | - | Configuration object for the wallet |
+
+### MoongateWalletConfig
+
+```typescript
+interface MoongateWalletConfig {
+  authMode: 'Google' | 'Apple' | 'Ethereum' | 'Twitter';
+  logoDataUri?: string;
+  position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
+  buttonLogoUri?: string;
+  environment?: 'production' | 'staging' | 'development';
+  displayState?: 'fullscreen' | 'minimized' | 'hidden';
+}
+```
+
+### Example
+
+```typescript
+import { registerMoonGateWallet } from '@moongate/moongate-adapter';
+
+registerMoonGateWallet({
+  authMode: 'Google',
+  environment: 'production',
+  position: 'top-right',
+  displayState: 'fullscreen'
+});
+```
+
+## 🆘 Need Help?
+
+- 📧 Email: amen@moongate.one or praneet@moongate.one
+- 💬 Telegram: [@and_its_praneet](https://t.me/and_its_praneet)
+- 🐛 Issues: Message us on [web.moongate.one](https://web.moongate.one)
+
+ 
