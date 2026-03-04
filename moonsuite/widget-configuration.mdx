@@ -1,0 +1,77 @@
+---
+title: Widget Configuration
+description: 'Configure the MoonSuite widget URL, parameters, and theme customization.'
+---
+
+## Widget URL Structure
+
+```
+https://web.moongate.one/token-details/{tokenMint}?apiKey={apiKey}
+```
+
+### Path Parameters
+
+| Parameter    | Required | Description                        |
+| ------------ | -------- | ---------------------------------- |
+| `tokenMint`  | Yes      | Solana SPL token mint address      |
+
+### Query Parameters
+
+| Parameter           | Required | Description                                             |
+| ------------------- | -------- | ------------------------------------------------------- |
+| `apiKey`            | Yes      | Partner API key (used to track swaps and onramps; also accepts `api_key`, `api-key`) |
+| `partner`           | No       | Partner project name (used for theming)                 |
+| `memeSuite`         | No       | Set to `true` for legacy iframe mode (hides nav UI)     |
+| `themeName`         | No       | `light` or `dark` base theme                            |
+| `containerColor`    | No       | Override container background color                     |
+| `primaryColor`      | No       | Override primary/accent color                           |
+| `secondaryColor`    | No       | Override secondary color                                |
+| `cardColor`         | No       | Override card background color                          |
+| `primaryTextColor`  | No       | Override primary text color                             |
+| `secondaryTextColor`| No       | Override secondary text color                           |
+| `primaryBtnTextColor`| No     | Override primary button text color                      |
+| `borderRadius`      | No       | Override border radius (number, in pixels)              |
+| `wgBorderRadius`    | No       | Override widget border radius (number, in pixels)       |
+
+<img src="/images/moonsuite-widget-config.png" alt="Widget Configuration and Theme Configuration in the Partner Dashboard — token address, dimensions, theme preset, and color pickers" style={{ width: '100%', maxWidth: '600px', maxHeight: '400px', objectFit: 'contain' }} />
+
+## Theme Configuration
+
+The `MoonSuiteTheme` object controls the widget appearance:
+
+| Property             | Type   | Description                       |
+| -------------------- | ------ | --------------------------------- |
+| `primaryColor`       | string | Accent color for buttons and links |
+| `backgroundColor`    | string | Widget background color            |
+| `cardColor`          | string | Card/section background color      |
+| `textColor`          | string | Primary text color                 |
+| `secondaryTextColor` | string | Muted/secondary text color         |
+
+## Theme Priority
+
+Themes are loaded in the following priority order:
+
+<Steps>
+  <Step title="URL Query Parameters (Highest Priority)">
+    Any color or styling values passed as URL query parameters take precedence over all other sources.
+  </Step>
+  <Step title="Partner Theme from API">
+    Theme configuration fetched from `/partner/moonsuite-theme/:projectName` (when `partner` is provided).
+  </Step>
+  <Step title="Default Dark Theme (Fallback)">
+    If no custom theme is configured, the default dark theme is applied.
+  </Step>
+</Steps>
+
+## Example: Custom Themed Widget
+
+```html
+<iframe
+  src="https://web.moongate.one/token-details/2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv?apiKey=YOUR_API_KEY&themeName=dark&primaryColor=%238B5CF6&containerColor=%230F0F0F&cardColor=%231A1A1A&primaryTextColor=%23FFFFFF&secondaryTextColor=%23A1A1AA&borderRadius=16"
+  width="420"
+  height="630"
+  frameborder="0"
+  allow="clipboard-write"
+  style="border: none; border-radius: 16px;"
+></iframe>
+```

@@ -1,0 +1,32 @@
+---
+title: Analytics
+description: 'MoonSuite event tracking, checkout funnels, and analytics integration.'
+---
+
+## Overview
+
+MoonSuite tracks user interactions through Segment (forwarded to Amplitude). All events are prefixed with `Widget:`.
+
+<img src="/images/moonsuite-analytics.png" alt="Analytics dashboard — swap statistics, volume, KPIs, and transaction history" style={{ width: '100%', maxWidth: '700px', maxHeight: '400px', objectFit: 'contain' }} />
+
+## Tracked Events
+
+| Event                           | Trigger                  |
+| ------------------------------- | ------------------------ |
+| `Widget: widget_viewed`         | Page loads               |
+| `Widget: token_viewed`          | Token details displayed  |
+| `Widget: buy_button_clicked`     | Buy button clicked       |
+| `Widget: sell_button_clicked`    | Sell button clicked      |
+| `Widget: swap_button_clicked`    | Swap button clicked      |
+| `Widget: buy_with_fiat_clicked`  | Buy with Fiat clicked    |
+| `Widget: checkout_started`      | Checkout initiated       |
+| `Widget: checkout_completed`    | Payment succeeded        |
+| `Widget: checkout_failed`       | Payment failed/abandoned |
+
+<img src="/images/moonsuite-analytics-volume.png" alt="Volume Trends — SOL volume traded over time with average per swap, recent growth, and per user average" style={{ width: '100%', maxWidth: '700px', maxHeight: '400px', objectFit: 'contain' }} />
+
+## Device Tracking
+
+We track activity on each device type — Web, iOS, and Android — including distribution, success rates, volume, and daily trends.
+
+<img src="/images/moonsuite-analytics-devices.png" alt="Device Distribution and Performance — swaps by Web, iOS, and Android with success rates and daily trends" style={{ width: '100%', maxWidth: '700px', maxHeight: '400px', objectFit: 'contain' }} />

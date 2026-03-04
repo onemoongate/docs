@@ -35,6 +35,15 @@
       ]
     },
     {
+      "group": "MoonSuite",
+      "pages": [
+        "moonsuite/overview",
+        "moonsuite/quick-start",
+        "moonsuite/widget-configuration",
+        "moonsuite/analytics"
+      ]
+    },
+    {
       "group": "Moongate Adapter",
       "pages": [
         "authentication/moongate-adapter/overview",

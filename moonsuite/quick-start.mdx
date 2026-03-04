@@ -1,0 +1,87 @@
+---
+title: Quick Start
+description: 'Create a Partner Dashboard account, get your API key, and embed the MoonSuite widget on your website.'
+---
+
+## 1. Create an Account on the Partner Dashboard
+
+To get your iframe embed code, you first need to create an account on the [Partner Dashboard](https://partner.moongate.one/). Once set up, you'll receive an API key used to track swaps and onramps.
+
+<img src="/images/moonsuite-api-key.png" alt="Partner Dashboard — API key ready for widget integration" style={{ width: '100%', maxWidth: '600px', maxHeight: '400px', objectFit: 'contain' }} />
+
+The dashboard's Widget section lets you configure the token, dimensions, and theme. The embed code generator produces the iframe code ready to copy.
+
+## 2. Embed the Widget
+
+Add the MoonSuite widget to any webpage with a single iframe tag:
+
+```html
+<iframe
+  src="https://web.moongate.one/token-details/TOKEN_MINT?apiKey=YOUR_API_KEY"
+  width="420"
+  height="630"
+  frameborder="0"
+  allow="clipboard-write"
+/>
+```
+
+Replace `TOKEN_MINT` with the Solana token mint address and `YOUR_API_KEY` with your partner API key from the dashboard.
+
+<img src="/images/moonsuite-widget.png" alt="MoonSuite widget embedded on a page — token details, price chart, and Buy button" style={{ width: '100%', maxWidth: '420px', maxHeight: '400px', objectFit: 'contain' }} />
+
+<Info>
+  The recommended widget dimensions are **420×630px**. The layout is mobile-first and responsive, so it works well on all screen sizes.
+</Info>
+
+## Integration Examples
+
+### Basic HTML Embed
+
+```html
+<iframe
+  src="https://web.moongate.one/token-details/2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv?apiKey=YOUR_API_KEY"
+  width="420"
+  height="700"
+  allow="accelerometer; autoplay; camera; gyroscope; payment; microphone; clipboard-write"
+  style="border: none; border-radius: 16px;"
+></iframe>
+```
+
+### Next.js / React
+
+```tsx
+const MOONSUITE_BASE_URL = 'https://web.moongate.one';
+const TOKEN_MINT = '2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv';
+const API_KEY = 'YOUR_API_KEY';
+
+export default function BuyTokenPage() {
+  return (
+    <iframe
+      title="MoonSuite Widget"
+      src={`${MOONSUITE_BASE_URL}/token-details/${TOKEN_MINT}?apiKey=${API_KEY}`}
+      width={420}
+      height={630}
+      allow="clipboard-write"
+      style={{ border: 'none', borderRadius: 16 }}
+    />
+  );
+}
+```
+
+### Recommended `allow` Attributes
+
+For full functionality (camera for KYC, payment APIs, clipboard):
+
+```
+allow="accelerometer; autoplay; camera; gyroscope; payment; microphone; clipboard-write"
+```
+
+## Support
+
+Get help from the MoonGate team directly from the dashboard:
+
+<img src="/images/moonsuite-support.png" alt="Support page — Chat on Telegram and Schedule a Call" style={{ width: '100%', maxWidth: '600px', maxHeight: '400px', objectFit: 'contain' }} />
+
+- **Email:** praneet@moongate.one
+- **Telegram:** [@and_its_praneet](https://t.me/and_its_praneet)
+- **Schedule a call:** [Book a call with Praneet](https://calendly.com/moongate-founders/30min)
